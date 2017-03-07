@@ -128,5 +128,32 @@ describe('StringReplacePlugin', function(){
             loader.call(mockConfig, "some <!-- @secret stuff --> string");
             assert.equal(replaced, "some replaced ==>stuff<== string", "replaces matches");
         });
+
+        it('should replace strings in source via options', function(){
+            mockConfig.options.replacement = {
+                before: 'replaced ==>',
+                after: '<=='
+            };
+            plugin.apply(mockConfig);
+
+            var replOpts = mockConfig.options[StringReplacePlugin.REPLACE_OPTIONS];
+
+            replOpts[id] = {
+                replacements: [{
+                    pattern: /<!-- @secret (\w*?) -->/ig,
+                    replacement: function (match, p1) {
+                        return this.options.replacement.before + p1 + this.options.replacement.after;
+                    }
+                }]
+            };
+
+            mockConfig.query = query;
+
+            var replaced = loader.call(mockConfig, "some string");
+            assert(replaced === "some string", "doesn't modify when there are no matches");
+
+            replaced = loader.call(mockConfig, "some <!-- @secret stuff --> string");
+            assert.equal(replaced, "some replaced ==>stuff<== string", "replaces matches");
+        });
     })
 });
