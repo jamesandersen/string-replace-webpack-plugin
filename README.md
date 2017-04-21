@@ -43,6 +43,7 @@ StringReplacePlugin.replace([nextLoaders: string], options, [prevLoaders: string
   * `replacements` disables the plugin
     * `pattern` a regex to match against the file contents
     * `replacement` an ECMAScript [string replacement function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_function_as_a_parameter)
+    * `id` an optional id. defaults to a random string
 * `prevLoaders` loaders to apply prior to the replacement
 
 ## License
