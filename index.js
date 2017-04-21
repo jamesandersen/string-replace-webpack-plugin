@@ -36,7 +36,7 @@ StringReplacePlugin.replace = function(nextLoaders, replaceOptions, prevLoaders)
         throw new Error("Invalid options for StringReplaceOptions.  Ensure the options objects has an array of replacements");
     }
 
-    var id = Math.random().toString(36).slice(2);
+    var id = replaceOptions.id && replaceOptions.id.length ? replaceOptions.id : Math.random().toString(36).slice(2);
     opts[id] = replaceOptions;
     var replaceLoader = require.resolve("./loader") + "?id=" + id,
         val = replaceLoader;
